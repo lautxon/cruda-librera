@@ -1,4 +1,17 @@
 /* =========================
+   CONFIGURACIÓN — EDITAR ACÁ
+   ========================= */
+const CONFIG = {
+  whatsapp: "5491100000000",            // ← tu número con código de país
+  email: "hola@crudalibrera.com",       // ← tu email
+  // Mercado Pago: pegá acá el link de pago que generes desde tu panel de MP.
+  // Si está vacío, el botón muestra un aviso.
+  mpPaymentLink: "",                    // ej: "https://mpago.la/2AbCdEf"
+  // Para envío del formulario con backend real (Formspree/Web3Forms):
+  formEndpoint: "",                     // ej: "https://formspree.io/f/xxxxxx"
+};
+
+/* =========================
    Datos
    ========================= */
 const BOOKS = [
@@ -24,13 +37,12 @@ const BOOKS = [
    ========================= */
 const fmt = n => "$" + n.toLocaleString("es-AR");
 
-// Color determinístico a partir de un string (para las tapas)
 function hashColor(str) {
   let h = 0;
   for (let i = 0; i < str.length; i++) h = str.charCodeAt(i) + ((h << 5) - h);
   const hue = Math.abs(h) % 360;
-  const sat = 45 + (Math.abs(h >> 3) % 25);  // 45-70
-  const lig = 32 + (Math.abs(h >> 5) % 18);  // 32-50
+  const sat = 45 + (Math.abs(h >> 3) % 25);
+  const lig = 32 + (Math.abs(h >> 5) % 18);
   return `hsl(${hue} ${sat}% ${lig}%)`;
 }
 function hashColor2(str) {
@@ -77,8 +89,10 @@ const cartPanel = document.getElementById("cart-panel");
 const cartBackdrop = document.getElementById("cart-backdrop");
 const cartItems = document.getElementById("cart-items");
 const cartCount = document.getElementById("cart-count");
+const cartTotalAmount = document.getElementById("cart-total-amount");
 const btnWA = document.getElementById("cart-send-wa");
 const btnMail = document.getElementById("cart-send-mail");
+const btnPayMP = document.getElementById("cart-pay-mp");
 
 function openCart() {
   cartPanel.classList.add("open");
@@ -95,15 +109,27 @@ document.getElementById("cart-toggle").addEventListener("click", openCart);
 document.getElementById("cart-close").addEventListener("click", closeCart);
 cartBackdrop.addEventListener("click", closeCart);
 
+function cartTotal() {
+  return cart.reduce((sum, it) => sum + it.price, 0);
+}
+
 function renderCart() {
   cartCount.textContent = cart.length;
   cartCount.dataset.count = cart.length;
+  const total = cartTotal();
+  cartTotalAmount.textContent = fmt(total);
+
   if (cart.length === 0) {
     cartItems.innerHTML = `<p class="cart-empty">Tu consulta está vacía.<br/>Agregá libros para armar tu pedido.</p>`;
-    btnWA.disabled = true; btnMail.disabled = true;
+    btnWA.disabled = true;
+    btnMail.disabled = true;
+    btnPayMP.disabled = true;
     return;
   }
-  btnWA.disabled = false; btnMail.disabled = false;
+  btnWA.disabled = false;
+  btnMail.disabled = false;
+  btnPayMP.disabled = false;
+
   cartItems.innerHTML = cart.map((it, idx) => `
     <div class="cart-item">
       <div class="cart-item-info">
@@ -114,6 +140,7 @@ function renderCart() {
       <button class="cart-item-remove" data-idx="${idx}" aria-label="Quitar">×</button>
     </div>
   `).join("");
+
   cartItems.querySelectorAll(".cart-item-remove").forEach(btn => {
     btn.addEventListener("click", () => {
       cart.splice(+btn.dataset.idx, 1);
@@ -128,7 +155,6 @@ function addToCart(item) {
   openCart();
 }
 
-// Botones "Consulta" en cada libro
 grid.addEventListener("click", e => {
   const btn = e.target.closest(".book-add");
   if (!btn) return;
@@ -136,25 +162,82 @@ grid.addEventListener("click", e => {
   addToCart({ ...book, type: "nuevo" });
 });
 
-// Vaciar
 document.getElementById("cart-clear").addEventListener("click", () => {
   cart.length = 0;
   renderCart();
 });
 
-// Enviar WhatsApp
+/* =========================
+   Envío WhatsApp / Email
+   ========================= */
+function buildCartText() {
+  const lines = cart.map(it =>
+    `• ${it.title} — ${it.author} (${it.publisher}) — ${fmt(it.price)}${it.state ? " [" + it.state + "]" : ""}`
+  );
+  return lines.join("\n");
+}
+
 btnWA.addEventListener("click", () => {
-  const phone = "5491100000000"; // ← reemplazar por el número real
-  const lines = cart.map(it => `• ${it.title} — ${it.author} (${it.publisher}) — ${fmt(it.price)}${it.state ? " [" + it.state + "]" : ""}`);
-  const msg = `Hola Cruda Librera! Quería consultar por:\n\n${lines.join("\n")}\n\n¿Están disponibles?`;
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  const msg = `Hola Cruda Librera! Quería consultar por:\n\n${buildCartText()}\n\nTotal: ${fmt(cartTotal())}\n\n¿Están disponibles?`;
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
 });
 
-// Enviar mail
 btnMail.addEventListener("click", () => {
-  const lines = cart.map(it => `• ${it.title} — ${it.author} (${it.publisher}) — ${fmt(it.price)}${it.state ? " [" + it.state + "]" : ""}`);
-  const body = `Hola Cruda Librera,\n\nQuería consultar por:\n\n${lines.join("\n")}\n\n¿Están disponibles?\n\nGracias!`;
-  window.location.href = `mailto:hola@crudalibrera.com?subject=${encodeURIComponent("Consulta de libros")}&body=${encodeURIComponent(body)}`;
+  const body = `Hola Cruda Librera,\n\nQuería consultar por:\n\n${buildCartText()}\n\nTotal: ${fmt(cartTotal())}\n\n¿Están disponibles?\n\nGracias!`;
+  window.location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("Consulta de libros")}&body=${encodeURIComponent(body)}`;
+});
+
+/* =========================
+   Mercado Pago (modal)
+   ========================= */
+const mpModal = document.getElementById("mp-modal");
+const mpSummary = document.getElementById("mp-summary");
+const mpTotalAmount = document.getElementById("mp-total-amount");
+const mpConfirmBtn = document.getElementById("mp-confirm-btn");
+
+function openMPModal() {
+  if (cart.length === 0) return;
+
+  mpSummary.innerHTML = cart.map(it => `
+    <div class="mp-summary-item">
+      <span class="mp-summary-item-name">${it.title}</span>
+      <span class="mp-summary-item-price">${fmt(it.price)}</span>
+    </div>
+  `).join("");
+
+  mpTotalAmount.textContent = fmt(cartTotal());
+
+  // Si hay link de pago configurado, lo usamos. Si no, mostramos aviso.
+  if (CONFIG.mpPaymentLink) {
+    mpConfirmBtn.href = CONFIG.mpPaymentLink;
+    mpConfirmBtn.textContent = "Ir a Mercado Pago";
+    mpConfirmBtn.onclick = null;
+  } else {
+    mpConfirmBtn.href = "#";
+    mpConfirmBtn.textContent = "Configurar link de pago";
+    mpConfirmBtn.onclick = (e) => {
+      e.preventDefault();
+      alert("Para activar los pagos:\n\n1) Entrá a tu panel de Mercado Pago\n2) Generá un 'Link de pago' por el total\n3) Pegalo en CONFIG.mpPaymentLink dentro de script.js\n\nMientras tanto, podés consultar por WhatsApp o email.");
+    };
+  }
+
+  mpModal.classList.add("open");
+  mpModal.setAttribute("aria-hidden", "false");
+}
+
+function closeMPModal() {
+  mpModal.classList.remove("open");
+  mpModal.setAttribute("aria-hidden", "true");
+}
+
+btnPayMP.addEventListener("click", openMPModal);
+document.getElementById("mp-modal-close").addEventListener("click", closeMPModal);
+document.querySelector(".mp-modal-backdrop").addEventListener("click", closeMPModal);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    closeMPModal();
+    closeCart();
+  }
 });
 
 /* =========================
@@ -174,8 +257,7 @@ BOOKS.forEach((b, i) => {
 function updateCalc() {
   const book = BOOKS[+calcBook.value];
   const factor = parseFloat(calcState.value);
-  const used = Math.round(book.price * factor);
-  calcPrice.textContent = fmt(used);
+  calcPrice.textContent = fmt(Math.round(book.price * factor));
 }
 calcBook.addEventListener("change", updateCalc);
 calcState.addEventListener("change", updateCalc);
@@ -196,6 +278,61 @@ document.getElementById("calc-add").addEventListener("click", () => {
 });
 
 /* =========================
+   Formulario de contacto
+   ========================= */
+const contactForm = document.getElementById("contact-form");
+const formStatus = document.getElementById("form-status");
+
+contactForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  formStatus.className = "form-status";
+  formStatus.textContent = "";
+
+  // Validación básica
+  const data = Object.fromEntries(new FormData(contactForm).entries());
+  if (!data.name || !data.email || !data.subject || !data.message) {
+    formStatus.classList.add("error");
+    formStatus.textContent = "Por favor completá todos los campos.";
+    return;
+  }
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
+  if (!emailOk) {
+    formStatus.classList.add("error");
+    formStatus.textContent = "El email no parece válido.";
+    return;
+  }
+
+  // Si hay endpoint configurado (Formspree/Web3Forms), lo usamos
+  if (CONFIG.formEndpoint) {
+    try {
+      const res = await fetch(CONFIG.formEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        formStatus.classList.add("success");
+        formStatus.textContent = "¡Gracias! Tu mensaje fue enviado. Te respondemos pronto.";
+        contactForm.reset();
+        return;
+      }
+      throw new Error("Error de red");
+    } catch (err) {
+      formStatus.classList.add("error");
+      formStatus.textContent = "Hubo un problema al enviar. Intentá de nuevo o escribinos por WhatsApp.";
+      return;
+    }
+  }
+
+  // Fallback: mailto
+  const body = `Nombre: ${data.name}\nEmail: ${data.email}\n\n${data.message}`;
+  window.location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(body)}`;
+  formStatus.classList.add("success");
+  formStatus.textContent = "Se abrió tu cliente de correo. Si no se abrió, escribinos a " + CONFIG.email;
+  contactForm.reset();
+});
+
+/* =========================
    Modo oscuro
    ========================= */
 const themeToggle = document.getElementById("theme-toggle");
@@ -211,11 +348,7 @@ themeToggle.addEventListener("click", () => {
 });
 
 /* =========================
-   Año footer
-   ========================= */
-document.getElementById("year").textContent = new Date().getFullYear();
-
-/* =========================
    Init
    ========================= */
+document.getElementById("year").textContent = new Date().getFullYear();
 renderCart();

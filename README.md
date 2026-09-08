@@ -4,12 +4,16 @@ Web app para una librería pequeña con curaduría propia. Hecha con HTML, CSS y
 
 ## Características
 
-- **Catálogo** de novedades con tapas estilizadas en CSS (ordenadas según la lista provista).
+- **Catálogo** de novedades con tapas estilizadas en CSS.
 - **Modo oscuro** con persistencia en `localStorage`.
-- **Carrito de consultas** lateral: acumula libros y permite enviar el pedido por **WhatsApp** o **email**.
-- **Calculadora de usados** con 5 niveles de estado (90%, 80%, 70%, 60%, 50%).
-- **Responsive** (mobile-first breakpoints en 860px y 520px).
-- Tipografías: **Merriweather** (texto) + **DM Sans** (títulos).
+- **Carrito de consultas** lateral con total acumulado.
+- **Calculadora de usados** con 5 niveles de estado.
+- **Formulario de contacto** funcional (mailto como fallback, o Formspree/Web3Forms).
+- **Pago con Mercado Pago**:
+  - Modo inmediato: link de pago estático (configurable).
+  - Modo avanzado: checkout dinámico con backend Node.js (ver `backend-mp.md`).
+- **Responsive** (mobile-first).
+- Tipografías: **Merriweather** + **DM Sans**.
 
 ## Estructura
 
@@ -17,28 +21,60 @@ Web app para una librería pequeña con curaduría propia. Hecha con HTML, CSS y
 index.html
 styles.css
 script.js
+backend-mp.md      ← integración completa con backend Node
 README.md
 ```
 
-## Personalización rápida
+## Configuración rápida
 
-1. **Número de WhatsApp**: en `script.js`, línea del handler de `btnWA`, reemplazar `5491100000000`.
-2. **Email**: buscar `hola@crudalibrera.com` en `index.html` y `script.js`.
-3. **Imágenes reales de tapas**: reemplazar el `<div class="book-cover">` generado en `script.js` por un `<img src="...">` cuando tengas las fotos.
-4. **Agregar libros**: editar el array `BOOKS` en `script.js`.
+Abrí `script.js` y editá el objeto `CONFIG` al inicio:
+
+```javascript
+const CONFIG = {
+  whatsapp: "5491100000000",        // tu WhatsApp
+  email: "hola@crudalibrera.com",   // tu email
+  mpPaymentLink: "",                // link de pago de Mercado Pago
+  formEndpoint: "",                 // endpoint de Formspree/Web3Forms
+};
+```
+
+### Cómo generar el link de pago de Mercado Pago
+
+1. Entrá a [Mercado Pago](https://www.mercadopago.com.ar/) → **Actividad** → **Link de pago**.
+2. Creá un link por el monto total del carrito (podés actualizarlo cada vez).
+3. Copiá la URL (ej: `https://mpago.la/2AbCdEf`) y pegala en `CONFIG.mpPaymentLink`.
+
+### Cómo conectar el formulario
+
+**Opción A — Formspree (gratis, 50 envíos/mes):**
+1. Creá cuenta en [formspree.io](https://formspree.io).
+2. Creá un form y copiá tu endpoint (ej: `https://formspree.io/f/xxxxxx`).
+3. Pegalo en `CONFIG.formEndpoint`.
+
+**Opción B — Web3Forms (gratis, ilimitado):**
+1. Entrá a [web3forms.com](https://web3forms.com).
+2. Generá tu access key.
+3. Usá el endpoint que te dan.
+
+**Opción C — Sin backend:**
+Dejá `formEndpoint` vacío. El formulario abrirá el cliente de correo del visitante.
+
+## Integración avanzada con Mercado Pago
+
+Para un checkout dinámico (sin links estáticos), seguí la guía en [`backend-mp.md`](./backend-mp.md). Incluye código Node.js listo para deploy.
 
 ## Subir a GitHub
 
 ```bash
 git init
 git add .
-git commit -m "Primer commit: Cruda Librera"
+git commit -m "v2: contacto + Mercado Pago"
 git branch -M main
 git remote add origin https://github.com/TU-USUARIO/cruda-librera.git
 git push -u origin main
 ```
 
-Luego podés activar **GitHub Pages** desde Settings → Pages para tenerla online gratis.
+Luego activá **GitHub Pages** desde Settings → Pages.
 
 ## Licencia
 

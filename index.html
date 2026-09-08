@@ -22,6 +22,7 @@
         <a href="#catalogo">Catálogo</a>
         <a href="#usados">Usados</a>
         <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
       </nav>
       <div class="header-actions">
         <button id="theme-toggle" class="icon-btn" aria-label="Cambiar tema">
@@ -121,6 +122,42 @@
     </div>
   </section>
 
+  <!-- CONTACTO (NUEVO) -->
+  <section id="contacto" class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Escribinos</h2>
+        <p class="section-sub">¿Buscás un libro que no está en el catálogo? ¿Querés reservar un título? Contanos.</p>
+      </div>
+
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="form-row">
+          <label class="field">
+            <span>Nombre</span>
+            <input type="text" name="name" required autocomplete="name" />
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+        </div>
+        <label class="field">
+          <span>Asunto</span>
+          <input type="text" name="subject" required placeholder="Ej: Consulta por un libro" />
+        </label>
+        <label class="field">
+          <span>Mensaje</span>
+          <textarea name="message" rows="5" required placeholder="Contanos en qué te podemos ayudar..."></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+          <span class="form-note">Respondemos en menos de 24hs hábiles.</span>
+        </div>
+        <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -140,6 +177,14 @@
       </div>
       <div id="cart-items" class="cart-items"></div>
       <div class="cart-foot">
+        <div id="cart-total" class="cart-total">
+          <span>Total</span>
+          <strong id="cart-total-amount">$0</strong>
+        </div>
+        <button id="cart-pay-mp" class="btn btn-mp" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          Pagar con Mercado Pago
+        </button>
         <button id="cart-send-wa" class="btn btn-primary" disabled>Consultar por WhatsApp</button>
         <button id="cart-send-mail" class="btn btn-ghost" disabled>Consultar por email</button>
         <button id="cart-clear" class="btn btn-ghost">Vaciar</button>
@@ -147,6 +192,36 @@
     </div>
   </aside>
   <div id="cart-backdrop" class="cart-backdrop"></div>
+
+  <!-- MODAL MERCADO PAGO -->
+  <div id="mp-modal" class="mp-modal" aria-hidden="true" role="dialog" aria-labelledby="mp-modal-title">
+    <div class="mp-modal-backdrop"></div>
+    <div class="mp-modal-content">
+      <button id="mp-modal-close" class="icon-btn mp-modal-close" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="mp-modal-header">
+        <div class="mp-logo">
+          <span>M</span>P
+        </div>
+        <h3 id="mp-modal-title">Confirmá tu compra</h3>
+      </div>
+      <div class="mp-modal-body">
+        <div id="mp-summary" class="mp-summary"></div>
+        <div class="mp-total">
+          <span>Total a pagar</span>
+          <strong id="mp-total-amount">$0</strong>
+        </div>
+        <p class="mp-note">Serás redirigido a Mercado Pago para completar el pago de forma segura. Acepta tarjeta de crédito, débito, dinero en cuenta y efectivo.</p>
+      </div>
+      <div class="mp-modal-actions">
+        <a id="mp-confirm-btn" href="#" class="btn btn-mp btn-mp-big" target="_blank" rel="noopener">
+          Ir a Mercado Pago
+        </a>
+        <p class="mp-secure">🔒 Pago seguro procesado por Mercado Pago</p>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

@@ -7,7 +7,7 @@
   --surface: #ffffff;
   --text: #2b2118;
   --text-soft: #6b5a48;
-  --accent: #b8532a;       /* terracota */
+  --accent: #b8532a;
   --accent-dark: #8f3f1e;
   --gold: #c9a24a;
   --border: #e3d7c2;
@@ -302,6 +302,29 @@ a { color: inherit; }
   z-index: 1;
 }
 
+/* Badge de estado */
+.book-state-badge {
+  position: absolute;
+  top: .8rem;
+  right: .8rem;
+  background: rgba(255,255,255,0.95);
+  color: #2b2118;
+  font-family: var(--font-sans);
+  font-size: .65rem;
+  font-weight: 700;
+  padding: .35rem .6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.book-state-badge.excellent { background: #2e7d32; color: #fff; }
+.book-state-badge.very-good { background: #558b2f; color: #fff; }
+.book-state-badge.good { background: #f9a825; color: #2b2118; }
+.book-state-badge.fair { background: #ef6c00; color: #fff; }
+.book-state-badge.worn { background: #c62828; color: #fff; }
+
 .book-info {
   padding: .9rem .2rem 0;
 }
@@ -324,6 +347,8 @@ a { color: inherit; }
   justify-content: space-between;
   align-items: center;
   margin-top: .4rem;
+  flex-wrap: wrap;
+  gap: .3rem;
 }
 .book-publisher {
   font-family: var(--font-sans);
@@ -331,6 +356,12 @@ a { color: inherit; }
   color: var(--text-soft);
   text-transform: uppercase;
   letter-spacing: .08em;
+}
+.book-state-text {
+  font-family: var(--font-sans);
+  font-size: .75rem;
+  color: var(--text-soft);
+  font-style: italic;
 }
 .book-price {
   font-family: var(--font-sans);
@@ -346,7 +377,7 @@ a { color: inherit; }
 }
 
 /* =========================
-   Calculadora
+   Calculadora (vender)
    ========================= */
 .calculator {
   display: grid;
@@ -368,6 +399,45 @@ a { color: inherit; }
   text-transform: uppercase;
   letter-spacing: .08em;
 }
+.input-money {
+  display: flex;
+  align-items: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0 1rem;
+  transition: border-color .2s, box-shadow .2s;
+}
+.input-money:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.input-money span {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-soft);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.input-money input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  padding: .85rem .5rem;
+  color: var(--text);
+  outline: none;
+  min-width: 0;
+}
+.input-money input::-webkit-outer-spin-button,
+.input-money input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input-money input[type=number] { -moz-appearance: textfield; }
+
 .field select {
   font-family: var(--font-serif);
   font-size: 1rem;
@@ -403,6 +473,12 @@ a { color: inherit; }
   color: var(--accent);
   letter-spacing: -.02em;
 }
+.calc-note {
+  font-size: .85rem;
+  color: var(--text-soft);
+  font-style: italic;
+  margin: 0;
+}
 
 .calc-info h3 {
   margin: 0 0 .6rem;
@@ -412,7 +488,7 @@ a { color: inherit; }
 .calc-info ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 1rem;
   display: flex;
   flex-direction: column;
   gap: .5rem;
@@ -429,6 +505,13 @@ a { color: inherit; }
   width: 8px; height: 8px;
   background: var(--gold);
   border-radius: 50%;
+}
+.calc-fine {
+  font-size: .85rem;
+  color: var(--text-soft);
+  padding-top: .8rem;
+  border-top: 1px dashed var(--border);
+  margin: 0;
 }
 
 /* =========================
@@ -448,6 +531,75 @@ a { color: inherit; }
   border: 1px solid var(--border);
 }
 .about-contact p { margin: .3rem 0; color: var(--text); font-size: .95rem; }
+
+/* =========================
+   Formulario de contacto
+   ========================= */
+.contact-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.contact-form input,
+.contact-form textarea {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  padding: .85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+  transition: border-color .2s, box-shadow .2s;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.form-note {
+  font-size: .85rem;
+  color: var(--text-soft);
+  font-style: italic;
+}
+.form-status {
+  font-size: .95rem;
+  padding: .8rem 1rem;
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.form-status.success {
+  display: block;
+  background: color-mix(in srgb, #2e7d32 15%, transparent);
+  color: #2e7d32;
+  border: 1px solid color-mix(in srgb, #2e7d32 30%, transparent);
+}
+[data-theme="dark"] .form-status.success { color: #81c784; }
+.form-status.error {
+  display: block;
+  background: color-mix(in srgb, #c0392b 15%, transparent);
+  color: #c0392b;
+  border: 1px solid color-mix(in srgb, #c0392b 30%, transparent);
+}
+[data-theme="dark"] .form-status.error { color: #ef9a9a; }
 
 /* =========================
    Footer
@@ -560,103 +712,6 @@ a { color: inherit; }
   gap: .5rem;
 }
 
-/* =========================
-   Responsive
-   ========================= */
-@media (max-width: 860px) {
-  .nav { display: none; }
-  .calculator { grid-template-columns: 1fr; padding: 1.5rem; }
-  .about { grid-template-columns: 1fr; gap: 1.5rem; }
-  .hero { padding: 3.5rem 0 3rem; }
-  .section { padding: 3.5rem 0; }
-}
-@media (max-width: 520px) {
-  .books-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1rem; }
-  .book-cover-title { font-size: 1rem; }
-  .book-cover { padding: 1rem; }
-  .brand-name { display: none; }
-}
-/* =========================
-   Formulario de contacto
-   ========================= */
-.contact-form {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 2rem;
-  box-shadow: var(--shadow);
-  max-width: 720px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-}
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-.contact-form input,
-.contact-form textarea {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  padding: .85rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  resize: vertical;
-  transition: border-color .2s, box-shadow .2s;
-}
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
-}
-.contact-form input:invalid:not(:placeholder-shown),
-.contact-form textarea:invalid:not(:placeholder-shown) {
-  border-color: #c0392b;
-}
-.form-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.form-note {
-  font-size: .85rem;
-  color: var(--text-soft);
-  font-style: italic;
-}
-.form-status {
-  font-size: .95rem;
-  padding: .8rem 1rem;
-  border-radius: var(--radius-sm);
-  display: none;
-}
-.form-status.success {
-  display: block;
-  background: color-mix(in srgb, #2e7d32 15%, transparent);
-  color: #2e7d32;
-  border: 1px solid color-mix(in srgb, #2e7d32 30%, transparent);
-}
-[data-theme="dark"] .form-status.success { color: #81c784; }
-.form-status.error {
-  display: block;
-  background: color-mix(in srgb, #c0392b 15%, transparent);
-  color: #c0392b;
-  border: 1px solid color-mix(in srgb, #c0392b 30%, transparent);
-}
-[data-theme="dark"] .form-status.error { color: #ef9a9a; }
-
-@media (max-width: 520px) {
-  .form-row { grid-template-columns: 1fr; }
-  .contact-form { padding: 1.25rem; }
-}
-
-/* =========================
-   Carrito — total + botón MP
-   ========================= */
 .cart-total {
   display: flex;
   justify-content: space-between;
@@ -678,6 +733,13 @@ a { color: inherit; }
   font-size: 1.3rem;
   color: var(--accent);
   font-weight: 900;
+}
+.cart-note {
+  font-size: .82rem;
+  color: var(--text-soft);
+  font-style: italic;
+  margin: 0 0 .3rem;
+  text-align: center;
 }
 
 .btn-mp {
@@ -838,4 +900,23 @@ a { color: inherit; }
   font-size: .8rem;
   color: var(--text-soft);
   margin: .8rem 0 0;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 860px) {
+  .nav { display: none; }
+  .calculator { grid-template-columns: 1fr; padding: 1.5rem; }
+  .about { grid-template-columns: 1fr; gap: 1.5rem; }
+  .hero { padding: 3.5rem 0 3rem; }
+  .section { padding: 3.5rem 0; }
+}
+@media (max-width: 520px) {
+  .books-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1rem; }
+  .book-cover-title { font-size: 1rem; }
+  .book-cover { padding: 1rem; }
+  .brand-name { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .contact-form { padding: 1.25rem; }
 }

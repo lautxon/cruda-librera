@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo — Cruda Librera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">CL</span>
+        <span class="brand-name">Cruda Librera</span>
+      </a>
+      <nav class="nav">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="blog.html">Blog</a>
+        <a href="buscados.html">Buscados</a>
+        <a href="manual-tasacion.html">Manual</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Cambiar tema">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button id="cart-toggle" class="icon-btn cart-btn" aria-label="Carrito">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span id="cart-count" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">Catálogo completo</h1>
+      <p class="page-sub">Nuestro stock está siendo clasificado. Cada libro es único y aparece acá cuando terminamos de revisarlo.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div id="books-grid" class="books-grid"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Cruda Librera. Libros de segunda, con primera intención.</p>
+    </div>
+  </footer>
+
+  <aside id="cart-panel" class="cart-panel" aria-hidden="true">
+    <div class="cart-panel-inner">
+      <div class="cart-head">
+        <h3>Tu selección</h3>
+        <button id="cart-close" class="icon-btn" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+      <div class="cart-foot">
+        <div id="cart-total" class="cart-total">
+          <span>Total</span>
+          <strong id="cart-total-amount">$0</strong>
+        </div>
+        <button id="cart-pay-mp" class="btn btn-mp" disabled>Pagar con Mercado Pago</button>
+        <button id="cart-send-wa" class="btn btn-primary" disabled>Reservar por WhatsApp</button>
+        <button id="cart-send-mail" class="btn btn-ghost" disabled>Reservar por email</button>
+        <button id="cart-clear" class="btn btn-ghost">Vaciar</button>
+      </div>
+    </div>
+  </aside>
+  <div id="cart-backdrop" class="cart-backdrop"></div>
+
+  <div id="mp-modal" class="mp-modal" aria-hidden="true">
+    <div class="mp-modal-backdrop"></div>
+    <div class="mp-modal-content">
+      <button id="mp-modal-close" class="icon-btn mp-modal-close">×</button>
+      <div class="mp-modal-header">
+        <div class="mp-logo"><span>M</span>P</div>
+        <h3>Confirmá tu compra</h3>
+      </div>
+      <div class="mp-modal-body">
+        <div id="mp-summary" class="mp-summary"></div>
+        <div class="mp-total">
+          <span>Total</span>
+          <strong id="mp-total-amount">$0</strong>
+        </div>
+      </div>
+      <div class="mp-modal-actions">
+        <a id="mp-confirm-btn" href="#" class="btn btn-mp btn-mp-big" target="_blank">Ir a Mercado Pago</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="cart.js"></script>
+  <script src="catalogo.js"></script>
+</body>
+</html>

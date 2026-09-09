@@ -1,75 +1,70 @@
 # Cruda Librera 📚
 
-Web app para una **librería de usados** con curaduría propia. Hecha con HTML, CSS y JavaScript vanilla.
+Web app multi-página para una **librería de usados** con curaduría propia. Hecha con HTML, CSS y JavaScript vanilla.
 
 ## Identidad
 
-Cruda Librera es una librería de segunda mano. Cada libro del catálogo es un ejemplar único, revisado y puesto en mesa con oficio. Además de vender, **compramos libros** a quienes quieran desprenderse de los suyos.
+Cruda Librera es una librería de segunda mano. Nuestro stock proviene de una colección preexistente que estamos clasificando libro por libro. No compramos libros: solo vendemos los que ya forman parte de nuestro acervo.
+
+## Arquitectura
+
+```
+index.html              → Home con destacados
+catalogo.html           → Catálogo completo
+blog.html               → Historias de libros y lectores
+buscados.html           → Tablón colaborativo de libros buscados
+manual-tasacion.html    → Guía educativa para tasar libros
+nosotros.html           → Sobre la librería
+contacto.html           → Formulario de contacto
+
+data.js                 → Datos centralizados (libros, posts, buscados iniciales)
+theme.js                → Modo oscuro compartido
+cart.js                 → Carrito y modal de Mercado Pago
+app.js                  → Lógica del home
+catalogo.js             → Lógica del catálogo
+blog.js                 → Render de posts
+buscados.js             → Tablón de buscados (con localStorage)
+contacto.js             → Formulario de contacto
+styles.css              → Estilos globales
+```
 
 ## Características
 
-- **Catálogo de usados** con badge de estado en cada tapa (excelente, muy bueno, bueno, aceptable, con marcas).
-- **Calculadora "Vendé tus libros"**: el cliente ingresa precio de tapa + estado y ve cuánto le pagaríamos.
-- **Carrito de reservas** lateral con total acumulado.
-- **Pago con Mercado Pago** (link de pago o checkout dinámico con backend).
-- **Formulario de contacto** funcional (mailto como fallback, o Formspree/Web3Forms).
-- **Modo oscuro** con persistencia en `localStorage`.
-- **Responsive** (mobile-first).
+- **Catálogo de usados** con badge de estado por tapa.
+- **Blog** con historias de libros y lectores.
+- **Buscados**: tablón colaborativo donde los lectores publican lo que buscan y otros pueden contactarlos.
+- **Manual de tasación**: guía educativa sobre cómo evaluar libros usados.
+- **Carrito de reservas** con envío por WhatsApp/email.
+- **Mercado Pago** (link de pago o checkout dinámico con backend).
+- **Modo oscuro** persistente.
+- **Responsive** mobile-first.
 - Tipografías: **Merriweather** + **DM Sans**.
 
-## Estructura
+## Configuración
 
-```
-index.html
-styles.css
-script.js
-README.md
-```
-
-## Configuración rápida
-
-Abrí `script.js` y editá el objeto `CONFIG` al inicio:
+Editá `data.js` → `CONFIG`:
 
 ```javascript
 const CONFIG = {
-  whatsapp: "5491100000000",        // tu WhatsApp
-  email: "hola@crudalibrera.com",   // tu email
-  mpPaymentLink: "",                // link de pago de Mercado Pago
-  formEndpoint: "",                 // endpoint de Formspree/Web3Forms
+  whatsapp: "5491100000000",
+  email: "hola@crudalibrera.com",
+  mpPaymentLink: "",
+  formEndpoint: "",
 };
 ```
 
-## Agregar libros al catálogo
+## Agregar contenido
 
-Editá el array `BOOKS` en `script.js`. Cada libro tiene:
+- **Libros**: array `BOOKS` en `data.js`.
+- **Posts del blog**: array `BLOG_POSTS` en `data.js`.
+- **Buscados iniciales**: array `BUSCADOS_INICIALES` en `data.js` (los nuevos se guardan en localStorage).
 
-```javascript
-{
-  title: "Título del libro",
-  author: "Autor",
-  publisher: "Editorial",
-  price: 25000,                          // precio usado final
-  state: "very-good",                    // excellent | very-good | good | fair | worn
-  stateLabel: "Muy buen estado"          // texto visible
-}
-```
-
-Los estados posibles y sus clases CSS:
-- `excellent` → verde oscuro
-- `very-good` → verde
-- `good` → amarillo
-- `fair` → naranja
-- `worn` → rojo
-
-## Subir a GitHub
+## Deploy
 
 ```bash
-git init
 git add .
-git commit -m "Cruda Librera — librería de usados"
-git branch -M main
-git remote add origin https://github.com/TU-USUARIO/cruda-librera.git
-git push -u origin main
+git commit -m "v3: multi-página + blog + buscados + manual"
+git push
 ```
 
 Activá **GitHub Pages** desde Settings → Pages.

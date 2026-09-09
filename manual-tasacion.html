@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual de tasación — Cruda Librera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">CL</span>
+        <span class="brand-name">Cruda Librera</span>
+      </a>
+      <nav class="nav">
+        <a href="catalogo.html">Catálogo</a>
+        <a href="blog.html">Blog</a>
+        <a href="buscados.html">Buscados</a>
+        <a href="manual-tasacion.html">Manual</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
 
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-title">Manual de tasación</h1>
+      <p class="page-sub">Cómo evaluar el estado y valor de un libro usado. Guía para lectores y vendedores.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container manual-content">
+      <div class="manual-intro">
+        <p>Este manual es una referencia educativa. En Cruda Librera usamos estos criterios para clasificar nuestro stock y fijar precios. Si querés vender libros, te va a servir para entender cómo se evalúan.</p>
+      </div>
+
+      <article class="manual-section">
+        <h2>1. Estados de conservación</h2>
+        <p>El estado de un libro se evalúa observando tapas, lomo, páginas y encuadernación. Usamos cinco categorías:</p>
+        
+        <div class="state-card">
+          <h3>Estado excelente</h3>
+          <p>Como nuevo. Sin señales de uso: tapas rígidas, lomo sin arrugas, páginas limpias y blancas, sin marcas de lectura. Puede tener el plástico de la librería original.</p>
+          <p><strong>Valor:</strong> 80-90% del precio de tapa original.</p>
+        </div>
+
+        <div class="state-card">
+          <h3>Muy buen estado</h3>
+          <p>Leído una vez, con mínimo cuidado. Puede tener una leve señal en una esquina o el lomo apenas marcado. Sin subrayados, sin firmas, sin manchas.</p>
+          <p><strong>Valor:</strong> 60-75% del precio de tapa.</p>
+        </div>
+
+        <div class="state-card">
+          <h3>Buen estado</h3>
+          <p>Libro leído, bien cuidado. Puede tener pequeñas marcas de uso: lomo con alguna arruga, tapas con leves desgastes en las esquinas. Sin daño estructural.</p>
+          <p><strong>Valor:</strong> 40-60% del precio de tapa.</p>
+        </div>
+
+        <div class="state-card">
+          <h3>Usado aceptable</h3>
+          <p>Marcas visibles de uso: tapas flexibles por el uso, lomo marcado, alguna página amarillenta. Puede tener firma del dueño anterior (sin tachaduras).</p>
+          <p><strong>Valor:</strong> 25-40% del precio de tapa.</p>
+        </div>
+
+        <div class="state-card">
+          <h3>Usado con marcas</h3>
+          <p>Desgaste evidente: tapas dañadas, lomo roto (pero páginas enteras), subrayados, anotaciones, manchas. Legible pero con historia visible.</p>
+          <p><strong>Valor:</strong> 10-25% del precio de tapa.</p>
+        </div>
+      </article>
+
+      <article class="manual-section">
+        <h2>2. Factores que afectan el valor</h2>
+        <ul>
+          <li><strong>Edición:</strong> primeras ediciones o ediciones limitadas valen más.</li>
+          <li><strong>Editorial:</strong> editoriales de prestigio (Alianza, Anagrama, Tusquets) mantienen mejor su valor.</li>
+          <li><strong>Demanda:</strong> autores clásicos o bestsellers tienen más rotación.</li>
+          <li><strong>Estado general:</strong> un libro raro pero muy dañado vale menos que uno común en excelente estado.</li>
+          <li><strong>Completitud:</strong> faltan páginas, sobrecubierta, mapas o láminas reduce el valor.</li>
+        </ul>
+      </article>
+
+      <article class="manual-section">
+        <h2>3. Qué no compramos</h2>
+        <ul>
+          <li>Libros de texto escolares o universitarios (se desactualizan rápido).</li>
+          <li>Enciclopedias o diccionarios antiguos.</li>
+          <li>Ejemplares con humedad, hongos o olor fuerte.</li>
+          <li>Libros con páginas faltantes o rotas.</li>
+          <li>Revistas (salvo ediciones especiales).</li>
+        </ul>
+      </article>
+
+      <article class="manual-section">
+        <h2>4. Cómo tasar tu propio libro</h2>
+        <ol>
+          <li>Buscá el precio de tapa original (suele estar en la contratapa o en internet).</li>
+          <li>Evaluá el estado según los criterios anteriores.</li>
+          <li>Aplicá el porcentaje correspondiente.</li>
+          <li>Ajustá según demanda: si es un autor buscado, podés subir un poco; si es muy común, bajá.</li>
+        </ol>
+        <p><strong>Ejemplo:</strong> Un libro que costó $30.000 nuevo, en buen estado, vale entre $12.000 y $18.000 usado.</p>
+      </article>
+
+      <div class="manual-cta">
+        <p>Si querés vender libros, escribinos por <a href="contacto.html">contacto</a> o pasá por la librería. Los tasamos en el acto.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Cruda Librera.</p>
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+</body>
+</html>

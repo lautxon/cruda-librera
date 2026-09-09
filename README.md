@@ -1,17 +1,19 @@
 # Cruda Librera 📚
 
-Web app para una librería pequeña con curaduría propia. Hecha con HTML, CSS y JavaScript vanilla (sin frameworks, sin build).
+Web app para una **librería de usados** con curaduría propia. Hecha con HTML, CSS y JavaScript vanilla.
+
+## Identidad
+
+Cruda Librera es una librería de segunda mano. Cada libro del catálogo es un ejemplar único, revisado y puesto en mesa con oficio. Además de vender, **compramos libros** a quienes quieran desprenderse de los suyos.
 
 ## Características
 
-- **Catálogo** de novedades con tapas estilizadas en CSS.
-- **Modo oscuro** con persistencia en `localStorage`.
-- **Carrito de consultas** lateral con total acumulado.
-- **Calculadora de usados** con 5 niveles de estado.
+- **Catálogo de usados** con badge de estado en cada tapa (excelente, muy bueno, bueno, aceptable, con marcas).
+- **Calculadora "Vendé tus libros"**: el cliente ingresa precio de tapa + estado y ve cuánto le pagaríamos.
+- **Carrito de reservas** lateral con total acumulado.
+- **Pago con Mercado Pago** (link de pago o checkout dinámico con backend).
 - **Formulario de contacto** funcional (mailto como fallback, o Formspree/Web3Forms).
-- **Pago con Mercado Pago**:
-  - Modo inmediato: link de pago estático (configurable).
-  - Modo avanzado: checkout dinámico con backend Node.js (ver `backend-mp.md`).
+- **Modo oscuro** con persistencia en `localStorage`.
 - **Responsive** (mobile-first).
 - Tipografías: **Merriweather** + **DM Sans**.
 
@@ -21,7 +23,6 @@ Web app para una librería pequeña con curaduría propia. Hecha con HTML, CSS y
 index.html
 styles.css
 script.js
-backend-mp.md      ← integración completa con backend Node
 README.md
 ```
 
@@ -38,43 +39,40 @@ const CONFIG = {
 };
 ```
 
-### Cómo generar el link de pago de Mercado Pago
+## Agregar libros al catálogo
 
-1. Entrá a [Mercado Pago](https://www.mercadopago.com.ar/) → **Actividad** → **Link de pago**.
-2. Creá un link por el monto total del carrito (podés actualizarlo cada vez).
-3. Copiá la URL (ej: `https://mpago.la/2AbCdEf`) y pegala en `CONFIG.mpPaymentLink`.
+Editá el array `BOOKS` en `script.js`. Cada libro tiene:
 
-### Cómo conectar el formulario
+```javascript
+{
+  title: "Título del libro",
+  author: "Autor",
+  publisher: "Editorial",
+  price: 25000,                          // precio usado final
+  state: "very-good",                    // excellent | very-good | good | fair | worn
+  stateLabel: "Muy buen estado"          // texto visible
+}
+```
 
-**Opción A — Formspree (gratis, 50 envíos/mes):**
-1. Creá cuenta en [formspree.io](https://formspree.io).
-2. Creá un form y copiá tu endpoint (ej: `https://formspree.io/f/xxxxxx`).
-3. Pegalo en `CONFIG.formEndpoint`.
-
-**Opción B — Web3Forms (gratis, ilimitado):**
-1. Entrá a [web3forms.com](https://web3forms.com).
-2. Generá tu access key.
-3. Usá el endpoint que te dan.
-
-**Opción C — Sin backend:**
-Dejá `formEndpoint` vacío. El formulario abrirá el cliente de correo del visitante.
-
-## Integración avanzada con Mercado Pago
-
-Para un checkout dinámico (sin links estáticos), seguí la guía en [`backend-mp.md`](./backend-mp.md). Incluye código Node.js listo para deploy.
+Los estados posibles y sus clases CSS:
+- `excellent` → verde oscuro
+- `very-good` → verde
+- `good` → amarillo
+- `fair` → naranja
+- `worn` → rojo
 
 ## Subir a GitHub
 
 ```bash
 git init
 git add .
-git commit -m "v2: contacto + Mercado Pago"
+git commit -m "Cruda Librera — librería de usados"
 git branch -M main
 git remote add origin https://github.com/TU-USUARIO/cruda-librera.git
 git push -u origin main
 ```
 
-Luego activá **GitHub Pages** desde Settings → Pages.
+Activá **GitHub Pages** desde Settings → Pages.
 
 ## Licencia
 

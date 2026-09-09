@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cruda Librera — Librería de autor</title>
-  <meta name="description" content="Cruda Librera. Librería pequeña con curaduría: narrativa, ensayo y poesía." />
+  <title>Cruda Librera — Librería de usados</title>
+  <meta name="description" content="Cruda Librera. Librería de usados con curaduría. Cada libro tiene una historia previa y una nueva espera." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
       </a>
       <nav class="nav">
         <a href="#catalogo">Catálogo</a>
-        <a href="#usados">Usados</a>
+        <a href="#vende">Vendé tus libros</a>
         <a href="#nosotros">Nosotros</a>
         <a href="#contacto">Contacto</a>
       </nav>
@@ -40,12 +40,12 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container hero-inner">
-      <p class="eyebrow">Librería · desde 2025</p>
-      <h1 class="hero-title">Libros que <em>pesan</em>,<br/>leídos con calma.</h1>
-      <p class="hero-subtitle">Una librería pequeña con curaduría propia. Novedades, usados y recomendaciones hechas a mano.</p>
+      <p class="eyebrow">Librería de usados · desde 2025</p>
+      <h1 class="hero-title">Libros que ya fueron leídos.<br/><em>Y quieren ser leídos otra vez.</em></h1>
+      <p class="hero-subtitle">Una librería pequeña, hecha de segunda mano y primera elección. Cada libro que ves acá fue revisado, elegido y puesto en mesa con cariño.</p>
       <div class="hero-actions">
-        <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
-        <a href="#usados" class="btn btn-ghost">¿Tenés usados?</a>
+        <a href="#catalogo" class="btn btn-primary">Ver el catálogo</a>
+        <a href="#vende" class="btn btn-ghost">¿Tenés libros para vender?</a>
       </div>
     </div>
   </section>
@@ -54,53 +54,58 @@
   <section id="catalogo" class="section">
     <div class="container">
       <div class="section-head">
-        <h2 class="section-title">Novedades</h2>
-        <p class="section-sub">Lo último que llegó a la mesa. Desplazate para conocer cada tapa.</p>
+        <h2 class="section-title">Nuestro catálogo</h2>
+        <p class="section-sub">Libros usados, uno por uno. Cada tapa muestra el estado real. Lo que ves es lo que hay.</p>
       </div>
       <div id="books-grid" class="books-grid"></div>
     </div>
   </section>
 
-  <!-- USADOS -->
-  <section id="usados" class="section section-alt">
+  <!-- VENDÉ TUS LIBROS -->
+  <section id="vende" class="section section-alt">
     <div class="container">
       <div class="section-head">
-        <h2 class="section-title">Usados</h2>
-        <p class="section-sub">Calculá el precio según el estado del libro. Todos nuestros usados pasan por una revisión manual.</p>
+        <h2 class="section-title">Vendé tus libros</h2>
+        <p class="section-sub">¿Tenés una biblioteca que ya no leés? Te la compramos. Calculá acá cuánto te pagaríamos según el estado.</p>
       </div>
 
       <div class="calculator">
         <div class="calc-form">
           <label class="field">
-            <span>Libro</span>
-            <select id="calc-book"></select>
+            <span>Precio de tapa original</span>
+            <div class="input-money">
+              <span>$</span>
+              <input type="number" id="calc-original" min="0" step="100" placeholder="Ej: 25000" />
+            </div>
           </label>
           <label class="field">
-            <span>Estado</span>
+            <span>Estado del libro</span>
             <select id="calc-state">
-              <option value="0.90">90% — Estado excelente</option>
-              <option value="0.80">80% — Muy buen estado</option>
-              <option value="0.70">70% — Buen estado</option>
-              <option value="0.60">60% — Usado sin marcas</option>
-              <option value="0.50">50% — Usado con marcas</option>
+              <option value="0.50">Estado excelente — sin señales de uso</option>
+              <option value="0.40">Muy buen estado — mínimas señales</option>
+              <option value="0.30">Buen estado — leído, bien cuidado</option>
+              <option value="0.20">Usado aceptable — marcas leves</option>
+              <option value="0.10">Usado con marcas — firma, subrayados, desgaste</option>
             </select>
           </label>
           <div class="calc-result" aria-live="polite">
-            <span class="calc-label">Precio usado</span>
+            <span class="calc-label">Te pagaríamos</span>
             <span id="calc-price" class="calc-price">$—</span>
           </div>
-          <button id="calc-add" class="btn btn-primary">Agregar al carrito de consultas</button>
+          <p class="calc-note">Los montos son orientativos. El precio final se confirma al revisar el libro en persona.</p>
+          <button id="calc-contact" class="btn btn-primary">Quiero vender mis libros</button>
         </div>
         <aside class="calc-info">
           <h3>¿Cómo funciona?</h3>
-          <p>Elegí un libro del catálogo (o cualquier otro), seleccioná el estado y te mostramos el precio final. Los usados se reservan por 48hs.</p>
+          <p>Traé tus libros a la librería (o escribinos con fotos) y los evaluamos uno a uno. Pagamos en el acto, en efectivo o por transferencia.</p>
           <ul>
-            <li><strong>90%</strong> Como nuevo, sin detalles.</li>
-            <li><strong>80%</strong> Mínimas señales de uso.</li>
-            <li><strong>70%</strong> Lectura previa, bien cuidado.</li>
-            <li><strong>60%</strong> Usado, sin marcas de dueño.</li>
-            <li><strong>50%</strong> Usado con marcas (firma, subrayados).</li>
+            <li><strong>Estado excelente:</strong> como nuevo, sin señales.</li>
+            <li><strong>Muy buen estado:</strong> leído una vez, impecable.</li>
+            <li><strong>Buen estado:</strong> lectura previa, bien cuidado.</li>
+            <li><strong>Usado aceptable:</strong> marcas leves de uso.</li>
+            <li><strong>Usado con marcas:</strong> firma, subrayados, desgaste visible.</li>
           </ul>
+          <p class="calc-fine">No compramos libros de texto, enciclopedias ni ejemplares con humedad o páginas faltantes.</p>
         </aside>
       </div>
     </div>
@@ -111,23 +116,25 @@
     <div class="container about">
       <div>
         <h2 class="section-title">Sobre Cruda Librera</h2>
-        <p>Somos una librería pequeña que empezó con una mesa, unos cuantos libros y la idea de que vender libros es también recomendarlos. Acá no hay algoritmo: hay lectura.</p>
-        <p>Atendemos de martes a sábados, de 11 a 19hs. Pasá a conocernos o escribinos.</p>
+        <p>Somos una librería de usados que empezó con una mesa, unos cuantos libros heredados y la idea de que un libro leído no pierde valor: lo gana.</p>
+        <p>Creemos en la segunda mano como oficio. Revisamos cada ejemplar, limpiamos las tapas, elegimos qué entra y qué no. Acá no hay algoritmo: hay lectura.</p>
+        <p>Atendemos de martes a sábados, de 11 a 19hs. Pasá a conocernos, hojear, conversar.</p>
       </div>
       <div class="about-contact">
         <p><strong>Email:</strong> hola@crudalibrera.com</p>
         <p><strong>Instagram:</strong> @crudalibrera</p>
         <p><strong>Dirección:</strong> Consultar por DM</p>
+        <p><strong>Horario:</strong> Mar a Sáb, 11 a 19hs</p>
       </div>
     </div>
   </section>
 
-  <!-- CONTACTO (NUEVO) -->
+  <!-- CONTACTO -->
   <section id="contacto" class="section section-alt">
     <div class="container">
       <div class="section-head">
         <h2 class="section-title">Escribinos</h2>
-        <p class="section-sub">¿Buscás un libro que no está en el catálogo? ¿Querés reservar un título? Contanos.</p>
+        <p class="section-sub">¿Buscás un título que no está en el catálogo? ¿Querés reservar algo? ¿Traer libros a tasar? Contanos.</p>
       </div>
 
       <form id="contact-form" class="contact-form" novalidate>
@@ -143,7 +150,7 @@
         </div>
         <label class="field">
           <span>Asunto</span>
-          <input type="text" name="subject" required placeholder="Ej: Consulta por un libro" />
+          <input type="text" name="subject" required placeholder="Ej: Busco un libro / Quiero vender / Consulta general" />
         </label>
         <label class="field">
           <span>Mensaje</span>
@@ -161,8 +168,8 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Cruda Librera. Hecho con libros y café.</p>
-      <p class="foot-note">Los precios pueden variar sin previo aviso.</p>
+      <p>© <span id="year"></span> Cruda Librera. Libros de segunda, con primera intención.</p>
+      <p class="foot-note">Los libros son únicos. Cuando se venden, no se reponen.</p>
     </div>
   </footer>
 
@@ -170,7 +177,7 @@
   <aside id="cart-panel" class="cart-panel" aria-hidden="true">
     <div class="cart-panel-inner">
       <div class="cart-head">
-        <h3>Tu consulta</h3>
+        <h3>Tu selección</h3>
         <button id="cart-close" class="icon-btn" aria-label="Cerrar carrito">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -181,12 +188,13 @@
           <span>Total</span>
           <strong id="cart-total-amount">$0</strong>
         </div>
+        <p class="cart-note">Cada ejemplar es único. Lo reservamos 48hs al confirmar.</p>
         <button id="cart-pay-mp" class="btn btn-mp" disabled>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
           Pagar con Mercado Pago
         </button>
-        <button id="cart-send-wa" class="btn btn-primary" disabled>Consultar por WhatsApp</button>
-        <button id="cart-send-mail" class="btn btn-ghost" disabled>Consultar por email</button>
+        <button id="cart-send-wa" class="btn btn-primary" disabled>Reservar por WhatsApp</button>
+        <button id="cart-send-mail" class="btn btn-ghost" disabled>Reservar por email</button>
         <button id="cart-clear" class="btn btn-ghost">Vaciar</button>
       </div>
     </div>
